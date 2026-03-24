@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Based Soybean Disease Monitoring System</title>
+  <meta
+    name="description"
+    content="A modern single-page research prototype for deployment-oriented soybean disease monitoring using edge preprocessing, ResNet/YOLO inference, cloud analytics, and decision support."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell"></div>
+
+  <header class="site-header">
+    <nav class="navbar container">
+      <a class="brand" href="#hero">
+        <span class="brand-mark">AI</span>
+        <span class="brand-copy">
+          <strong>Soybean Disease Monitoring</strong>
+          <small>Deployment-oriented research prototype</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#demo">Live Demo</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#insights">Model Insights</a>
+        <a href="#decision">Decision Support</a>
+        <a href="#future">Future Scope</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-section section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Research-Grade Smart Agriculture Interface</p>
+          <h1>AI-Based Soybean Disease Monitoring System</h1>
+          <p class="hero-subtitle">
+            A deployment-oriented AI platform for soybean disease analysis across field, edge, and cloud environments.
+            Built to demonstrate scalable crop health monitoring with deep learning, explainable workflows, and action-ready outputs.
+          </p>
+
+          <div class="hero-metrics">
+            <article class="metric-card glass-card">
+              <span>98.4K</span>
+              <small>Mock leaf images indexed across monitoring cycles</small>
+            </article>
+            <article class="metric-card glass-card">
+              <span>34 ms</span>
+              <small>Simulated edge preprocessing latency per capture</small>
+            </article>
+            <article class="metric-card glass-card">
+              <span>6</span>
+              <small>Operational disease classes plus healthy leaf detection</small>
+            </article>
+          </div>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#demo">Try Demo</a>
+            <a class="button secondary" href="#architecture">View Architecture</a>
+            <a class="button tertiary" href="#dashboard">See Dashboard</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-stage glass-panel">
+            <div class="visual-orbit orbit-one"></div>
+            <div class="visual-orbit orbit-two"></div>
+            <div class="scan-core">
+              <div class="soy-core">
+                <span>AI Crop Vision</span>
+                <strong>ResNet + YOLO</strong>
+              </div>
+            </div>
+            <div class="visual-node node-phone">
+              <span class="icon-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="7" y="2.5" width="10" height="19" rx="2.5"></rect>
+                  <circle cx="12" cy="18" r="1"></circle>
+                </svg>
+              </span>
+              <div>
+                <strong>Smartphone</strong>
+                <small>Field scouting capture</small>
+              </div>
+            </div>
+            <div class="visual-node node-drone">
+              <span class="icon-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 8.5 3.5 5M17 8.5 20.5 5M9 9l-3-1m9 1 3-1M7 8.5l-1.8 4.2m11.6-4.2 1.8 4.2"></path>
+                  <rect x="9" y="9" width="6" height="5" rx="1"></rect>
+                  <path d="M8.5 13.5 6 18h12l-2.5-4.5"></path>
+                </svg>
+              </span>
+              <div>
+                <strong>UAV / Drone</strong>
+                <small>Rapid canopy surveillance</small>
+              </div>
+            </div>
+            <div class="visual-node node-cloud">
+              <span class="icon-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7.5 18.5h8.7a4.3 4.3 0 0 0 .7-8.6A5.8 5.8 0 0 0 6.2 8a4.5 4.5 0 0 0 1.3 10.5Z"></path>
+                  <path d="M10 13.5h4M12 11.5v4"></path>
+                </svg>
+              </span>
+              <div>
+                <strong>Cloud Analytics</strong>
+                <small>Retraining and longitudinal insight</small>
+              </div>
+            </div>
+            <div class="visual-node node-alert">
+              <span class="icon-badge">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3 3.5 18h17L12 3Z"></path>
+                  <path d="M12 9v4.5M12 17h.01"></path>
+                </svg>
+              </span>
+              <div>
+                <strong>Decision Layer</strong>
+                <small>Severity, confidence, treatment</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="overview-section section" id="overview">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Project Overview</p>
+          <h2>Designed for field deployment, not just laboratory benchmarking</h2>
+          <p>
+            Soybean disease inspection is difficult to scale manually because field conditions shift constantly, symptoms overlap,
+            and imaging quality varies across devices. This prototype presents the workflow as an operational monitoring platform
+            rather than a static classifier demo.
+          </p>
+        </div>
+
+        <div class="overview-grid">
+          <article class="overview-card glass-card reveal">
+            <h3>Manual inspection bottlenecks</h3>
+            <p>
+              Visual scoring in real farms is labor-intensive, subjective, and sensitive to lighting, occlusion, and crop growth stage.
+            </p>
+          </article>
+          <article class="overview-card glass-card reveal">
+            <h3>Overlapping symptom patterns</h3>
+            <p>
+              Brown Spot, Septoria Leaf Spot, and Frogeye Leaf Spot can show visually similar lesions, requiring consistent model support.
+            </p>
+          </article>
+          <article class="overview-card glass-card reveal">
+            <h3>Multi-source practicality</h3>
+            <p>
+              Smartphone capture supports agronomists, UAV imaging expands coverage, and IoT cameras enable repeat monitoring at fixed locations.
+            </p>
+          </article>
+          <article class="overview-card glass-card reveal">
+            <h3>Deployment-aware AI workflow</h3>
+            <p>
+              The system emphasizes preprocessing, source-aware inference, cloud aggregation, and decision support to reflect real operational use.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="architecture-section section" id="architecture">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Five-Layer Deployment Architecture</p>
+          <h2>Interactive architecture flow from image capture to agronomic action</h2>
+          <p>Click any layer to inspect its role, sample data flow, and deployment importance.</p>
+        </div>
+
+        <div class="architecture-flow">
+          <button class="arch-card glass-card reveal" data-layer="acquisition">
+            <span class="arch-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="6" width="6" height="11" rx="1.5"></rect>
+                <path d="M9.5 10H13l2-3h5.5v10H15l-2-3H9.5"></path>
+              </svg>
+            </span>
+            <strong>Image Acquisition</strong>
+            <small>Smartphone, UAV, IoT camera</small>
+          </button>
+          <span class="flow-arrow">→</span>
+          <button class="arch-card glass-card reveal" data-layer="preprocess">
+            <span class="arch-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h16M7 4v6M17 14H7M17 20V10"></path>
+              </svg>
+            </span>
+            <strong>Edge Preprocessing</strong>
+            <small>Resize, normalization, QC</small>
+          </button>
+          <span class="flow-arrow">→</span>
+          <button class="arch-card glass-card reveal" data-layer="detection">
+            <span class="arch-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                <path d="M8 8h3v3H8zM13 13h3v3h-3zM13 8h3v3h-3zM8 13h3v3H8z"></path>
+              </svg>
+            </span>
+            <strong>Detection &amp; Classification</strong>
+            <small>ResNet and YOLO inference</small>
+          </button>
+          <span class="flow-arrow">→</span>
+          <button class="arch-card glass-card reveal" data-layer="analytics">
+            <span class="arch-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 18h16M7 16V9M12 16V6M17 16v-4"></path>
+              </svg>
+            </span>
+            <strong>Cloud Analytics</strong>
+            <small>Aggregation, retraining, monitoring</small>
+          </button>
+          <span class="flow-arrow">→</span>
+          <button class="arch-card glass-card reveal" data-layer="decision">
+            <span class="arch-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12.5 9.2 17 19 7.5"></path>
+                <path d="M12 3v4M3 12h4M17 12h4M12 17v4"></path>
+              </svg>
+            </span>
+            <strong>Decision Support</strong>
+            <small>Alerts, scores, treatment guidance</small>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="demo-section section" id="demo">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Live Demo</p>
+          <h2>Simulated inference pipeline for realistic supervisor-facing interaction</h2>
+          <p>
+            Upload a leaf image or choose a sample source. The system will run a mocked deployment pipeline with source-aware preprocessing,
+            model selection, detection output, severity estimation, and treatment guidance.
+          </p>
+        </div>
+
+        <div class="demo-layout">
+          <div class="demo-controls glass-card reveal">
+            <div class="upload-panel">
+              <h3>Input source</h3>
+              <label class="upload-box" for="imageUpload">
+                <input id="imageUpload" type="file" accept="image/*">
+                <span class="upload-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 16V5M8.5 8.5 12 5l3.5 3.5"></path>
+                    <rect x="4" y="15" width="16" height="5" rx="2.5"></rect>
+                  </svg>
+                </span>
+                <strong>Drop or select a soybean leaf image</strong>
+                <small>Mock inference only. No backend upload is required.</small>
+              </label>
+            </div>
+
+            <div class="source-selector">
+              <h3>Capture platform</h3>
+              <div class="segmented-control" id="sourceSelector">
+                <button class="active" data-source="Smartphone">Smartphone</button>
+                <button data-source="UAV / Drone">UAV / Drone</button>
+                <button data-source="IoT Camera">IoT Camera</button>
+              </div>
+            </div>
+
+            <div class="sample-gallery">
+              <div class="gallery-header">
+                <h3>Sample captures</h3>
+                <span>Switch samples to update mock outputs</span>
+              </div>
+              <div class="sample-grid" id="sampleGrid">
+                <button class="sample-card active" data-sample="rust">
+                  <span class="sample-visual rust"></span>
+                  <strong>Soybean Rust</strong>
+                  <small>Field smartphone capture</small>
+                </button>
+                <button class="sample-card" data-sample="brown-spot">
+                  <span class="sample-visual brown-spot"></span>
+                  <strong>Brown Spot</strong>
+                  <small>Low-altitude UAV frame</small>
+                </button>
+                <button class="sample-card" data-sample="healthy">
+                  <span class="sample-visual healthy"></span>
+                  <strong>Healthy Leaf</strong>
+                  <small>IoT edge device stream</small>
+                </button>
+              </div>
+            </div>
+
+            <button class="button primary wide" id="runAnalysis">Run Analysis</button>
+          </div>
+
+          <div class="demo-results">
+            <div class="preview-panel glass-card reveal">
+              <div class="preview-header">
+                <div>
+                  <h3>Visual inference viewport</h3>
+                  <small id="previewLabel">Sample ready: Soybean Rust</small>
+                </div>
+                <span class="status-pill" id="analysisStatus">Awaiting analysis</span>
+              </div>
+
+              <div class="preview-stage" id="previewStage">
+                <img id="uploadedPreview" alt="Uploaded soybean leaf preview" hidden>
+                <div class="preview-art rust" id="previewArt">
+                  <div class="scan-grid"></div>
+                  <div class="detection-box one"></div>
+                  <div class="detection-box two"></div>
+                  <div class="detection-box three"></div>
+                  <div class="scan-line"></div>
+                </div>
+              </div>
+
+              <div class="pipeline" id="pipelineSteps">
+                <div class="pipeline-step"><span></span>Image quality check</div>
+                <div class="pipeline-step"><span></span>Resize and normalization</div>
+                <div class="pipeline-step"><span></span>Model selection</div>
+                <div class="pipeline-step"><span></span>Disease detection</div>
+                <div class="pipeline-step"><span></span>Confidence calculation</div>
+                <div class="pipeline-step"><span></span>Severity estimation</div>
+              </div>
+            </div>
+
+            <div class="result-card glass-card reveal">
+              <div class="result-header">
+                <h3>Mock analysis output</h3>
+                <small>Deployment-oriented summary card</small>
+              </div>
+
+              <div class="result-grid">
+                <article>
+                  <span>Disease Name</span>
+                  <strong id="resultDisease">Soybean Rust</strong>
+                </article>
+                <article>
+                  <span>Confidence</span>
+                  <strong id="resultConfidence">94.2%</strong>
+                </article>
+                <article>
+                  <span>Severity Level</span>
+                  <strong id="resultSeverity">High</strong>
+                </article>
+                <article>
+                  <span>Source Type</span>
+                  <strong id="resultSource">Smartphone</strong>
+                </article>
+                <article>
+                  <span>Model Used</span>
+                  <strong id="resultModel">YOLOv8 + ResNet-50</strong>
+                </article>
+                <article>
+                  <span>Processing Mode</span>
+                  <strong id="resultMode">Edge preprocess / cloud aggregate</strong>
+                </article>
+              </div>
+
+              <div class="result-highlight">
+                <div>
+                  <span>Treatment Suggestion</span>
+                  <p id="resultTreatment">
+                    Prioritize fungicide scheduling for rust-sensitive blocks, isolate rapidly spreading areas, and rescan within 72 hours.
+                  </p>
+                </div>
+                <div>
+                  <span>Monitoring Summary</span>
+                  <p id="resultSummary">
+                    YOLO-style lesion localization detected clustered pustule-like regions with strong confidence. Cloud layer flags this plot for high-frequency follow-up.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-section section" id="dashboard">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Operational Dashboard</p>
+          <h2>Mock monitoring analytics for a real deployment narrative</h2>
+          <p>
+            These panels present realistic scan volume, disease spread, source contribution, retraining cadence, and edge-cloud performance to make the prototype feel operational.
+          </p>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card glass-card reveal">
+            <span>Total scans</span>
+            <strong id="kpiTotalScans">12,480</strong>
+            <small>+8.7% versus previous week</small>
+          </article>
+          <article class="kpi-card glass-card reveal">
+            <span>Detection confidence</span>
+            <strong>92.6%</strong>
+            <small>Mean confidence across recent flagged scans</small>
+          </article>
+          <article class="kpi-card glass-card reveal">
+            <span>Edge inference share</span>
+            <strong>61%</strong>
+            <small>Preprocessed locally before sync to cloud</small>
+          </article>
+          <article class="kpi-card glass-card reveal">
+            <span>Retraining readiness</span>
+            <strong>84%</strong>
+            <small>Label diversity threshold approaching target</small>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Healthy vs Diseased Ratio</h3>
+              <small>Recent fleet-wide scan distribution</small>
+            </div>
+            <div class="ratio-wrap">
+              <div class="donut healthy-ratio">
+                <span>68%</span>
+              </div>
+              <div class="ratio-legend">
+                <p><strong>Healthy:</strong> 8,486 scans</p>
+                <p><strong>Diseased:</strong> 3,994 scans</p>
+                <p><strong>Trend:</strong> Mild rise in rust-related alerts in humid plots</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Disease Category Counts</h3>
+              <small>Class-level prevalence snapshot</small>
+            </div>
+            <div class="bar-stack">
+              <div class="bar-row">
+                <span>Soybean Rust</span>
+                <div class="bar-track"><div class="bar-fill rust-fill" style="width: 82%;"></div></div>
+                <strong>1,540</strong>
+              </div>
+              <div class="bar-row">
+                <span>Brown Spot</span>
+                <div class="bar-track"><div class="bar-fill brown-fill" style="width: 64%;"></div></div>
+                <strong>1,196</strong>
+              </div>
+              <div class="bar-row">
+                <span>Septoria</span>
+                <div class="bar-track"><div class="bar-fill septoria-fill" style="width: 51%;"></div></div>
+                <strong>940</strong>
+              </div>
+              <div class="bar-row">
+                <span>Frogeye</span>
+                <div class="bar-track"><div class="bar-fill frogeye-fill" style="width: 43%;"></div></div>
+                <strong>702</strong>
+              </div>
+              <div class="bar-row">
+                <span>Bacterial Blight</span>
+                <div class="bar-track"><div class="bar-fill blight-fill" style="width: 30%;"></div></div>
+                <strong>496</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Weekly Disease Trend</h3>
+              <small>Seven-day rolling disease intensity</small>
+            </div>
+            <div class="trend-chart">
+              <svg viewBox="0 0 320 180" class="chart-svg" id="trendChart" aria-hidden="true"></svg>
+              <div class="trend-labels">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Sun</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Severity Distribution</h3>
+              <small>Alert population by estimated impact</small>
+            </div>
+            <div class="severity-panel">
+              <div class="severity-band low">
+                <span>Low</span>
+                <strong>41%</strong>
+              </div>
+              <div class="severity-band moderate">
+                <span>Moderate</span>
+                <strong>36%</strong>
+              </div>
+              <div class="severity-band high">
+                <span>High</span>
+                <strong>23%</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Recent Alerts</h3>
+              <small>Decision layer queue</small>
+            </div>
+            <div class="alert-list" id="recentAlerts">
+              <div class="alert-item">
+                <strong>Plot B-17 | Soybean Rust</strong>
+                <span>Confidence 95.1% | Severity High | Smartphone upload</span>
+              </div>
+              <div class="alert-item">
+                <strong>Sector North-4 | Brown Spot</strong>
+                <span>Confidence 89.4% | Severity Moderate | UAV sweep</span>
+              </div>
+              <div class="alert-item">
+                <strong>Gate Sensor 03 | Septoria Leaf Spot</strong>
+                <span>Confidence 86.8% | Severity Moderate | IoT camera</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Treatment Recommendations</h3>
+              <small>System-suggested intervention summary</small>
+            </div>
+            <div class="recommendation-list">
+              <div>
+                <strong>Rust-sensitive block</strong>
+                <p>Escalate to targeted fungicide planning and increase scan frequency for 72 hours.</p>
+              </div>
+              <div>
+                <strong>Moderate lesion zones</strong>
+                <p>Use UAV revisit to validate spread and compare humidity-linked expansion patterns.</p>
+              </div>
+              <div>
+                <strong>Healthy baseline plots</strong>
+                <p>Retain as control samples for drift monitoring and future federated training rounds.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Device / Source Contribution</h3>
+              <small>Monitoring network composition</small>
+            </div>
+            <div class="device-breakdown">
+              <div class="device-row">
+                <span>Smartphone</span>
+                <div class="mini-track"><div class="mini-fill" style="width: 46%;"></div></div>
+                <strong>46%</strong>
+              </div>
+              <div class="device-row">
+                <span>UAV / Drone</span>
+                <div class="mini-track"><div class="mini-fill alt" style="width: 34%;"></div></div>
+                <strong>34%</strong>
+              </div>
+              <div class="device-row">
+                <span>IoT Camera</span>
+                <div class="mini-track"><div class="mini-fill soft" style="width: 20%;"></div></div>
+                <strong>20%</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Retraining Status</h3>
+              <small>Cloud analytics and model maintenance</small>
+            </div>
+            <div class="retraining-card">
+              <div class="progress-row">
+                <span>Label review completion</span>
+                <strong>84%</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 84%;"></div></div>
+              <div class="progress-row">
+                <span>Cross-region sample balance</span>
+                <strong>71%</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill alt" style="width: 71%;"></div></div>
+              <div class="progress-row">
+                <span>Federated round synchronization</span>
+                <strong>63%</strong>
+              </div>
+              <div class="progress-track"><div class="progress-fill soft" style="width: 63%;"></div></div>
+            </div>
+          </article>
+
+          <article class="dashboard-card glass-card reveal">
+            <div class="card-header">
+              <h3>Edge / Cloud Processing Split</h3>
+              <small>Deployment resource orchestration</small>
+            </div>
+            <div class="ratio-wrap">
+              <div class="donut process-ratio">
+                <span>61 / 39</span>
+              </div>
+              <div class="ratio-legend">
+                <p><strong>Edge:</strong> Quality control, resize, normalization, triage</p>
+                <p><strong>Cloud:</strong> Aggregation, drift watch, retraining, analytics</p>
+                <p><strong>Goal:</strong> Maintain responsiveness while preserving global insight</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  <section class="insights-section section" id="insights">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Model Insights</p>
+        <h2>Classification and localization models aligned with deployment constraints</h2>
+        <p>
+          This section frames model choice in research terms, balancing performance metrics with latency, memory, and operational suitability.
+        </p>
+      </div>
+
+      <div class="insights-grid">
+        <article class="insight-card glass-card reveal">
+          <h3>Why ResNet works here</h3>
+          <p>
+            ResNet supports stable image-level disease classification by preserving deep feature learning without vanishing-gradient collapse. It is well suited to mobile capture workflows and benchmark-driven class discrimination.
+          </p>
+        </article>
+        <article class="insight-card glass-card reveal">
+          <h3>Why YOLO matters here</h3>
+          <p>
+            YOLO provides lesion localization, real-time detection, and region-aware visualization that strengthens supervisor demos and field deployment credibility, especially for UAV and edge use cases.
+          </p>
+        </article>
+        <article class="insight-card glass-card reveal">
+          <h3>Why the pairing is practical</h3>
+          <p>
+            A hybrid setup allows quick local triage, spatial lesion awareness, and cloud-side aggregation. This reflects a realistic path toward edge/mobile/UAV readiness rather than a single-model lab demo.
+          </p>
+        </article>
+      </div>
+
+      <div class="benchmark-table glass-card reveal">
+        <div class="table-header">
+          <h3>Benchmarking Awareness</h3>
+          <small>Illustrative research-style comparison</small>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>ResNet-50</th>
+              <th>YOLO Variant</th>
+              <th>Deployment Interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Accuracy</td>
+              <td>95.1%</td>
+              <td>93.4%</td>
+              <td>ResNet is stronger for leaf-level class consistency.</td>
+            </tr>
+            <tr>
+              <td>Precision</td>
+              <td>94.3%</td>
+              <td>92.6%</td>
+              <td>Useful for reducing false disease alerts.</td>
+            </tr>
+            <tr>
+              <td>Recall</td>
+              <td>93.5%</td>
+              <td>94.1%</td>
+              <td>YOLO captures lesion-heavy regions effectively.</td>
+            </tr>
+            <tr>
+              <td>F1-score</td>
+              <td>93.9%</td>
+              <td>93.3%</td>
+              <td>Both models remain competitive under field noise.</td>
+            </tr>
+            <tr>
+              <td>mAP</td>
+              <td>Not primary</td>
+              <td>88.7%</td>
+              <td>Critical when localization matters for lesion tracking.</td>
+            </tr>
+            <tr>
+              <td>Latency</td>
+              <td>42 ms</td>
+              <td>31 ms</td>
+              <td>YOLO is favorable for near real-time response loops.</td>
+            </tr>
+            <tr>
+              <td>Memory / FLOPs</td>
+              <td>Moderate</td>
+              <td>Optimized moderate</td>
+              <td>Selection depends on device budget and frame rate need.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="decision-section section" id="decision">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Decision Support Layer</p>
+        <h2>The final action layer translates inference into field guidance</h2>
+        <p>
+          This panel is intentionally styled like an operations console so the outcome feels closer to a real agronomic decision system than a research poster.
+        </p>
+      </div>
+
+        <div class="decision-layout">
+          <div class="decision-main glass-card reveal">
+            <div class="alert-banner">
+              <span class="pulse-dot"></span>
+              <div>
+                <strong id="decisionAlertTitle">Disease alert triggered: Soybean Rust risk elevated in monitored plot cluster</strong>
+                <p id="decisionAlertBody">Urgent review suggested because the current sample indicates high-confidence lesion activity with moderate-to-high severity.</p>
+              </div>
+            </div>
+
+            <div class="decision-metrics">
+              <div class="gauge-card">
+                <span>Severity Meter</span>
+                <div class="gauge-shell">
+                  <div class="gauge-fill" id="decisionGaugeNeedle"></div>
+                  <div class="gauge-center">
+                    <strong id="decisionSeverityScore">78</strong>
+                    <small>/ 100</small>
+                  </div>
+                </div>
+              </div>
+              <div class="confidence-card">
+                <span>Confidence Indicator</span>
+                <strong id="decisionConfidence">94.2%</strong>
+                <small id="decisionConfidenceText">High-confidence prediction with lesion localization consistency</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="decision-side">
+            <article class="support-card glass-card reveal">
+              <h3>Treatment Suggestions</h3>
+              <p id="decisionTreatmentCard">Apply localized fungicide strategy in susceptible zones and prioritize scouting in adjacent humidity-prone areas.</p>
+            </article>
+            <article class="support-card glass-card reveal">
+              <h3>Follow-up Recommendation</h3>
+              <p id="decisionFollowupCard">Schedule a repeat scan within 48 to 72 hours using the same source pathway for temporal comparison.</p>
+            </article>
+            <article class="support-card glass-card reveal">
+              <h3>Validation Note</h3>
+              <p id="decisionValidationNote">Expert agronomic review is still recommended before field-scale intervention, especially under mixed-symptom conditions.</p>
+            </article>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="future-section section" id="future">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Future Scope &amp; Research Contribution</p>
+        <h2>Next steps toward scalable, explainable, and geographically robust deployment</h2>
+        <p>
+          The roadmap highlights how this prototype could evolve into a broader smart agriculture research platform with stronger reliability and cross-region adaptability.
+        </p>
+      </div>
+
+      <div class="future-grid">
+        <article class="future-card glass-card reveal">
+          <h3>Federated learning support</h3>
+          <p>Coordinate updates across farms without centralizing raw imagery, improving privacy and regional participation.</p>
+        </article>
+        <article class="future-card glass-card reveal">
+          <h3>Explainable AI overlays</h3>
+          <p>Integrate attention maps, lesion rationale, and confidence decomposition for stronger interpretability.</p>
+        </article>
+        <article class="future-card glass-card reveal">
+          <h3>Cross-regional validation</h3>
+          <p>Benchmark robustness across climate, cultivar, and camera differences to reduce site-specific bias.</p>
+        </article>
+        <article class="future-card glass-card reveal">
+          <h3>Lightweight edge models</h3>
+          <p>Refine compact variants for smartphones, drones, and embedded IoT hardware with strict latency budgets.</p>
+        </article>
+        <article class="future-card glass-card reveal">
+          <h3>Cloud retraining orchestration</h3>
+          <p>Use seasonal drift tracking and active learning to refresh deployed models with new symptom patterns.</p>
+        </article>
+        <article class="future-card glass-card reveal">
+          <h3>Scalable farm monitoring</h3>
+          <p>Expand from plot-level assessments to wide-area crop health surveillance with integrated decision loops.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>AI-Based Soybean Disease Monitoring System</strong>
+        <p>Academic smart agriculture prototype for supervisor review and deployment-oriented project discussion.</p>
+      </div>
+      <div class="footer-actions">
+        <a class="button secondary" href="#future">Download Report</a>
+        <a class="button tertiary" href="#architecture">View Architecture</a>
+        <a class="button tertiary" href="mailto:research.team@example.com">Contact Team</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="architectureModal" aria-hidden="true">
+    <div class="modal-panel glass-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Close details">
+        <span></span>
+        <span></span>
+      </button>
+      <div class="modal-icon" id="modalIcon"></div>
+      <p class="eyebrow" id="modalEyebrow">Layer</p>
+      <h3 id="modalTitle">Architecture Layer</h3>
+      <p id="modalDescription"></p>
+      <div class="modal-grid">
+        <article>
+          <span>Sample Input</span>
+          <p id="modalInput"></p>
+        </article>
+        <article>
+          <span>Sample Output</span>
+          <p id="modalOutput"></p>
+        </article>
+        <article>
+          <span>Why It Matters</span>
+          <p id="modalImportance"></p>
+        </article>
+        <article>
+          <span>Deployment Relevance</span>
+          <p id="modalRelevance"></p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
