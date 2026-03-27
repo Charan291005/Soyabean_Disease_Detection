@@ -317,7 +317,37 @@
               </div>
 
               <div class="preview-stage" id="previewStage">
-                <img id="uploadedPreview" alt="Uploaded soybean leaf preview" hidden>
+                <div class="image-container" id="imageContainer">
+                  <div class="image-wrapper" id="imageWrapper">
+                    <img id="uploadedPreview" alt="Uploaded soybean leaf preview" hidden>
+                    <div class="progress-overlay" id="progressOverlay" hidden>
+                      <div class="progress-scanner" id="progressScanner"></div>
+                      <div class="progress-center">
+                        <div class="progress-ring">
+                          <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" stroke="rgba(76, 175, 80, 0.2)" stroke-width="4" fill="none"/>
+                            <circle cx="60" cy="60" r="50" stroke="var(--green)" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16" id="progressCircle"/>
+                          </svg>
+                          <div class="progress-text" id="progressText">0%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="image-metadata" id="imageMetadata" hidden>
+                    <div class="metadata-row">
+                      <span class="metadata-label">File:</span>
+                      <span class="metadata-value" id="metadataFileName">--</span>
+                    </div>
+                    <div class="metadata-row">
+                      <span class="metadata-label">Size:</span>
+                      <span class="metadata-value" id="metadataFileSize">--</span>
+                    </div>
+                    <div class="metadata-row">
+                      <span class="metadata-label">Dimensions:</span>
+                      <span class="metadata-value" id="metadataDimensions">--</span>
+                    </div>
+                  </div>
+                </div>
                 <div class="preview-art rust" id="previewArt">
                   <div class="scan-grid"></div>
                   <div class="detection-box one"></div>
@@ -328,12 +358,18 @@
               </div>
 
               <div class="pipeline" id="pipelineSteps">
-                <div class="pipeline-step"><span></span>Image quality check</div>
-                <div class="pipeline-step"><span></span>Resize and normalization</div>
-                <div class="pipeline-step"><span></span>Model selection</div>
-                <div class="pipeline-step"><span></span>Disease detection</div>
-                <div class="pipeline-step"><span></span>Confidence calculation</div>
-                <div class="pipeline-step"><span></span>Severity estimation</div>
+                <div class="wave-progress-bar" id="waveProgressBar">
+                  <div class="wave-container">
+                    <div class="wave-fill" id="waveFill"></div>
+                    <div class="wave"></div>
+                  </div>
+                  <div class="wave-label" id="waveLabel">0%</div>
+                </div>
+                <div class="pipeline-step"><span></span><span class="step-label">Image Quality & Preprocessing</span></div>
+                <div class="pipeline-step"><span></span><span class="step-label">Model Inference Pipeline</span></div>
+                <div class="pipeline-step"><span></span><span class="step-label">Lesion Detection & Localization</span></div>
+                <div class="pipeline-step"><span></span><span class="step-label">Cloud Analytics & Aggregation</span></div>
+                <div class="pipeline-step"><span></span><span class="step-label">Decision Support Generation</span></div>
               </div>
             </div>
 
@@ -382,6 +418,144 @@
                   <p id="resultSummary">
                     Run analysis to get monitoring summary.
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY & ADVANCED FEATURES SECTION -->
+    <section class="features-section section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Advanced Features</p>
+          <h2>Extended Analysis & Management Tools</h2>
+        </div>
+
+        <div class="features-tabs">
+          <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="history">Recent History</button>
+            <button class="tab-btn" data-tab="batch">Batch Processing</button>
+            <button class="tab-btn" data-tab="settings">Settings & Export</button>
+            <button class="tab-btn" data-tab="comparison">Comparison</button>
+          </div>
+
+          <!-- HISTORY TAB -->
+          <div class="tab-content active" id="history-tab">
+            <div class="history-container glass-card reveal">
+              <h3>Recent Analysis Results</h3>
+              <div class="history-list" id="historyList">
+                <div class="history-empty">
+                  <p>No analysis history yet. Run your first analysis to see results here.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BATCH PROCESSING TAB -->
+          <div class="tab-content" id="batch-tab">
+            <div class="batch-container glass-card reveal">
+              <h3>Batch Image Processing</h3>
+              <p>Upload and process multiple images at once for fleet monitoring.</p>
+              <div class="batch-upload">
+                <label class="upload-box batch-upload-box" for="batchImageUpload">
+                  <input id="batchImageUpload" type="file" accept="image/*" multiple>
+                  <span class="upload-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 16V5M8.5 8.5 12 5l3.5 3.5"></path>
+                      <rect x="4" y="15" width="16" height="5" rx="2.5"></rect>
+                    </svg>
+                  </span>
+                  <strong>Drop multiple images or select files</strong>
+                  <small>Process up to 10 images simultaneously</small>
+                </label>
+              </div>
+              <button class="button primary" id="processBatch">Process Batch</button>
+              <div class="batch-progress" id="batchProgress" hidden>
+                <div class="batch-status" id="batchStatus">0 / 0 processed</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="batchProgressFill"></div>
+                </div>
+                <div class="batch-results" id="batchResults"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SETTINGS & EXPORT TAB -->
+          <div class="tab-content" id="settings-tab">
+            <div class="settings-container glass-card reveal">
+              <h3>Settings & Data Export</h3>
+              
+              <div class="settings-group">
+                <h4>Display Preferences</h4>
+                <label class="setting-item">
+                  <input type="checkbox" id="darkModeToggle">
+                  <span>Dark Mode</span>
+                </label>
+                <label class="setting-item">
+                  <input type="checkbox" id="autoPlayToggle" checked>
+                  <span>Auto-play Analysis</span>
+                </label>
+                <label class="setting-item">
+                  <input type="checkbox" id="notificationsToggle" checked>
+                  <span>Enable Notifications</span>
+                </label>
+              </div>
+
+              <div class="settings-group">
+                <h4>Confidence Threshold</h4>
+                <div class="slider-container">
+                  <input type="range" id="confidenceThreshold" min="0" max="100" value="85" class="slider" title="Confidence Threshold Slider">
+                  <span id="thresholdValue">85%</span>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h4>Export Data</h4>
+                <div class="export-buttons">
+                  <button class="button secondary" id="exportJSON">Export as JSON</button>
+                  <button class="button secondary" id="exportCSV">Export as CSV</button>
+                  <button class="button secondary" id="exportPDF">Export as PDF</button>
+                  <button class="button secondary" id="clearHistory">Clear History</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COMPARISON TAB -->
+          <div class="tab-content" id="comparison-tab">
+            <div class="comparison-container glass-card reveal">
+              <h3>Compare Analysis Results</h3>
+              <p>Select two results from history to compare side-by-side.</p>
+              <div class="comparison-selector">
+                <div class="comparison-col">
+                  <label>Result 1:</label>
+                  <select id="compareSelect1" title="Select First Analysis Result">
+                    <option>Select first result...</option>
+                  </select>
+                </div>
+                <div class="comparison-col">
+                  <label>Result 2:</label>
+                  <select id="compareSelect2" title="Select Second Analysis Result">
+                    <option>Select second result...</option>
+                  </select>
+                </div>
+              </div>
+              <button class="button primary" id="compareBtn">Compare</button>
+              <div class="comparison-results" id="comparisonResults" hidden>
+                <div class="compare-row">
+                  <div class="compare-item"><strong>Disease</strong><p id="compare1Disease"></p></div>
+                  <div class="compare-item"><strong>Disease</strong><p id="compare2Disease"></p></div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-item"><strong>Confidence</strong><p id="compare1Conf"></p></div>
+                  <div class="compare-item"><strong>Confidence</strong><p id="compare2Conf"></p></div>
+                </div>
+                <div class="compare-row">
+                  <div class="compare-item"><strong>Severity</strong><p id="compare1Sev"></p></div>
+                  <div class="compare-item"><strong>Severity</strong><p id="compare2Sev"></p></div>
                 </div>
               </div>
             </div>
@@ -449,27 +623,27 @@
             <div class="bar-stack">
               <div class="bar-row">
                 <span>Soybean Rust</span>
-                <div class="bar-track"><div class="bar-fill rust-fill" style="width: 82%;"></div></div>
+                <div class="bar-track"><div class="bar-fill rust-fill w-82"></div></div>
                 <strong>1,540</strong>
               </div>
               <div class="bar-row">
                 <span>Brown Spot</span>
-                <div class="bar-track"><div class="bar-fill brown-fill" style="width: 64%;"></div></div>
+                <div class="bar-track"><div class="bar-fill brown-fill w-64"></div></div>
                 <strong>1,196</strong>
               </div>
               <div class="bar-row">
                 <span>Septoria</span>
-                <div class="bar-track"><div class="bar-fill septoria-fill" style="width: 51%;"></div></div>
+                <div class="bar-track"><div class="bar-fill septoria-fill w-51"></div></div>
                 <strong>940</strong>
               </div>
               <div class="bar-row">
                 <span>Frogeye</span>
-                <div class="bar-track"><div class="bar-fill frogeye-fill" style="width: 43%;"></div></div>
+                <div class="bar-track"><div class="bar-fill frogeye-fill w-43"></div></div>
                 <strong>702</strong>
               </div>
               <div class="bar-row">
                 <span>Bacterial Blight</span>
-                <div class="bar-track"><div class="bar-fill blight-fill" style="width: 30%;"></div></div>
+                <div class="bar-track"><div class="bar-fill blight-fill w-30"></div></div>
                 <strong>496</strong>
               </div>
             </div>
@@ -565,17 +739,17 @@
             <div class="device-breakdown">
               <div class="device-row">
                 <span>Smartphone</span>
-                <div class="mini-track"><div class="mini-fill" style="width: 46%;"></div></div>
+                <div class="mini-track"><div class="mini-fill w-46"></div></div>
                 <strong>46%</strong>
               </div>
               <div class="device-row">
                 <span>UAV / Drone</span>
-                <div class="mini-track"><div class="mini-fill alt" style="width: 34%;"></div></div>
+                <div class="mini-track"><div class="mini-fill alt w-34"></div></div>
                 <strong>34%</strong>
               </div>
               <div class="device-row">
                 <span>IoT Camera</span>
-                <div class="mini-track"><div class="mini-fill soft" style="width: 20%;"></div></div>
+                <div class="mini-track"><div class="mini-fill soft w-20"></div></div>
                 <strong>20%</strong>
               </div>
             </div>
@@ -591,17 +765,17 @@
                 <span>Label review completion</span>
                 <strong>84%</strong>
               </div>
-              <div class="progress-track"><div class="progress-fill" style="width: 84%;"></div></div>
+              <div class="progress-track"><div class="progress-fill w-84"></div></div>
               <div class="progress-row">
                 <span>Cross-region sample balance</span>
                 <strong>71%</strong>
               </div>
-              <div class="progress-track"><div class="progress-fill alt" style="width: 71%;"></div></div>
+              <div class="progress-track"><div class="progress-fill alt w-71"></div></div>
               <div class="progress-row">
                 <span>Federated round synchronization</span>
                 <strong>63%</strong>
               </div>
-              <div class="progress-track"><div class="progress-fill soft" style="width: 63%;"></div></div>
+              <div class="progress-track"><div class="progress-fill soft w-63"></div></div>
             </div>
           </article>
 
