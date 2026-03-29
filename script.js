@@ -221,6 +221,54 @@ const comparisonResults = document.getElementById("comparisonResults");
 
 const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
+// NEW: Toast Notification System
+class ToastNotification {
+  static show(title, message, type = 'info', duration = 4000) {
+    const container = document.querySelector('.toast-container') || this.createContainer();
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <div class="toast-content">
+        <div class="toast-title">${title}</div>
+        <div class="toast-message">${message}</div>
+      </div>
+      <button class="toast-close">×</button>
+    `;
+    container.appendChild(toast);
+
+    toast.querySelector('.toast-close').addEventListener('click', () => {
+      toast.style.animation = 'slideInLeft 0.3s ease forwards';
+      setTimeout(() => toast.remove(), 300);
+    });
+
+    setTimeout(() => {
+      if (toast.parentElement) {
+        toast.style.animation = 'slideInLeft 0.3s ease forwards';
+        setTimeout(() => toast.remove(), 300);
+      }
+    }, duration);
+  }
+
+  static createContainer() {
+    const container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+    return container;
+  }
+
+  static success(title, message, duration) {
+    this.show(title, message, 'success', duration);
+  }
+
+  static error(title, message, duration) {
+    this.show(title, message, 'error', duration);
+  }
+
+  static info(title, message, duration) {
+    this.show(title, message, 'info', duration);
+  }
+}
+
 async function analyzeImageForPlantContent() {
   return new Promise((resolve) => {
     const img = new Image();
@@ -831,7 +879,7 @@ async function runPipeline() {
   // Update decision panel and dashboard
   updateDecisionPanel(sample, adjustedConfidence);
   updateDashboard(sample, adjustedConfidence);
-  
+
   // Add to analysis history
   addToHistory({
     disease: sample.label,
@@ -840,7 +888,12 @@ async function runPipeline() {
     source: state.activeSource,
     model: adjustedModel
   });
-  
+
+  // Show success notification
+  if (state.notificationsEnabled) {
+    ToastNotification.success('Analysis Complete', `${sample.label} detected with ${adjustedConfidence.toFixed(1)}% confidence`, 5000);
+  }
+
   state.hasRunAnalysis = true;
   state.running = false;
   runAnalysis.disabled = false;
@@ -1044,15 +1097,17 @@ async function processBatchImage(index) {
   `;
 }
 
-function setupSettingsToggleS() {
+function setupSettingsToggles() {
   darkModeToggle.addEventListener('change', toggleDarkMode);
   autoPlayToggle.addEventListener('change', () => {
     state.autoPlay = autoPlayToggle.checked;
     localStorage.setItem('autoPlay', state.autoPlay);
+    ToastNotification.success('Auto-play', autoPlayToggle.checked ? 'Enabled' : 'Disabled');
   });
   notificationsToggle.addEventListener('change', () => {
     state.notificationsEnabled = notificationsToggle.checked;
     localStorage.setItem('notificationsEnabled', state.notificationsEnabled);
+    ToastNotification.success('Notifications', notificationsToggle.checked ? 'Enabled' : 'Disabled');
   });
   confidenceThreshold.addEventListener('input', (e) => {
     state.confidenceThreshold = parseInt(e.target.value);
@@ -1169,6 +1224,13 @@ function init() {
   setupExportButtons();
   setupComparisonMode();
   loadSavedPreferences();
+
+  // Show welcome notification
+  setTimeout(() => {
+    if (state.notificationsEnabled) {
+      ToastNotification.info('Welcome', 'Soybean Disease Monitoring System Ready', 3000);
+    }
+  }, 800);
 }
 
 init();
